@@ -25,7 +25,7 @@ class Solution {
     }
 
     /**
-     * 已左边的数为参考，先从右往左 再从左往右
+     * 先以左边的数为参考，先从右往左 再从左往右
      * @param nums
      * @param i
      * @param j
