@@ -55,7 +55,7 @@ class Solution {
         nums[j] = temp;
     }
 
-    // 选择排序
+    // 快速排序
     // public int[] sortArray(int[] nums) {
     // int length = nums.length;
     // sortArray(nums, 0, length - 1);
