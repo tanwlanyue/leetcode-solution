@@ -1,5 +1,7 @@
 package LC0912;
 
+import java.util.Arrays;
+
 /**
  * ⭐️⭐️⭐️堆排序
  *
@@ -11,7 +13,7 @@ class Solution {
         int len = nums.length;
         // 将数组整理成堆
         heapify(nums);
-        for (int i = len - 1; i >= 1; ) {
+        for (int i = len - 1; i >= 1;) {
             // 把堆顶元素（当前最大）交换到数组末尾
             swap(nums, 0, i);
             i--;
@@ -23,7 +25,7 @@ class Solution {
 
     private void heapify(int[] nums) {
         int len = nums.length;
-        // 只需要从 i = (len - 1) / 2 这个位置开始逐层下移  从有孩子节点的最后一个开始
+        // 只需要从 i = (len - 1) / 2 这个位置开始逐层下移 从有孩子节点的最后一个开始
         for (int i = (len - 1) / 2; i >= 0; i--) {
             siftDown(nums, i, len - 1);
         }
@@ -53,6 +55,7 @@ class Solution {
         nums[j] = temp;
     }
 
+    // 选择排序
     // public int[] sortArray(int[] nums) {
     // int length = nums.length;
     // sortArray(nums, 0, length - 1);
@@ -89,5 +92,38 @@ class Solution {
     // int temp = nums[i];
     // nums[i] = nums[j];
     // nums[j] = temp;
+    // }
+
+
+
+    // 归并排序
+    // public int[] sortArray(int[] nums) {
+    // int length = nums.length;
+    // int[] temp = Arrays.copyOf(nums, length);
+    // sortArray(nums, 0, length - 1, temp);
+    // return nums;
+    // }
+    //
+    // public void sortArray(int[] nums, int i, int j, int[] temp) {
+    // if (i >= j) {
+    // return;
+    // }
+    // int mid = (i + j) / 2;
+    // sortArray(nums, i, mid, temp);
+    // sortArray(nums, mid + 1, j, temp);
+    // int a = i, b = mid + 1;
+    // int c = i;
+    // while (a <= mid || b <= j) {
+    // if (a > mid) {
+    // nums[c++] = temp[b++];
+    // } else if (b > j) {
+    // nums[c++] = temp[a++];
+    // } else if (temp[a] < temp[b]) {
+    // nums[c++] = temp[a++];
+    // } else {
+    // nums[c++] = temp[b++];
+    // }
+    // }
+    // System.arraycopy(nums, i, temp, i, j - i + 1);
     // }
 }
