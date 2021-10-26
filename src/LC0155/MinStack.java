@@ -1,61 +1,44 @@
 package LC0155;
 
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 /**
+ * minStack存的下标
  * @author zhanglei211 on 2021/10/19.
  */
 class MinStack {
 
-    class Node {
-        int num;
-        int val;
-
-        public Node(int num, int val) {
-            this.num = num;
-            this.val = val;
-        }
-    }
-
-    ArrayDeque<Integer> numStack;
-    ArrayDeque<Node> minStack;
+    ArrayList<Integer> numStack;
+    ArrayList<Integer> minStack;
 
     public MinStack() {
-        this.numStack = new ArrayDeque<>();
-        this.minStack = new ArrayDeque<>();
+        this.numStack = new ArrayList<>();
+        this.minStack = new ArrayList<>();
     }
 
     public void push(int val) {
-        numStack.push(val);
+        numStack.add(val);
         if (minStack.isEmpty()) {
-            minStack.push(new Node(1, val));
+            minStack.add(0);
         } else {
-            if (val < minStack.peek().val) {
-                minStack.push(new Node(1, val));
-            } else {
-                Node node = minStack.peek();
-                node.num = node.num + 1;
+            if (numStack.get(minStack.get(minStack.size() - 1)) > val) {
+                minStack.add(numStack.size() - 1);
             }
-
         }
     }
 
     public void pop() {
-        numStack.pop();
-        Node node = minStack.peek();
-        if (node.num == 1) {
-            minStack.pop();
-        } else {
-            node.num = node.num - 1;
+        numStack.remove(numStack.size() - 1);
+        if (numStack.size() == minStack.get(minStack.size() - 1)) {
+            minStack.remove(minStack.size() - 1);
         }
-
     }
 
     public int top() {
-        return numStack.peek();
+        return numStack.get(numStack.size() - 1);
     }
 
     public int getMin() {
-        return minStack.peek().val;
+        return numStack.get(minStack.get(minStack.size() - 1));
     }
 }
