@@ -1,7 +1,5 @@
 package LC0543;
 
-import java.util.HashMap;
-
 /**
  * 注意孩子为null时长度的计算，若为null直接为0
  * @author zhanglei211 on 2021/9/24.
