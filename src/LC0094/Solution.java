@@ -2,6 +2,7 @@ package LC0094;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -11,9 +12,9 @@ import java.util.List;
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        ArrayList<Integer> res = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
         if (root == null) {
-            return res;
+            return list;
         }
         ArrayDeque<TreeNode> stack = new ArrayDeque<>();
         while (!stack.isEmpty() || root != null) {
@@ -21,25 +22,25 @@ class Solution {
                 stack.push(root);
                 root = root.left;
             }
-            TreeNode pop = stack.pop();
-            res.add(pop.val);
-            root = pop.right;
+            root = stack.pop();
+            list.add(root.val);
+            root = root.right;
         }
-        return res;
+        return list;
     }
 
-//    public List<Integer> inorderTraversal(TreeNode root) {
-//        ArrayList<Integer> res = new ArrayList<>();
-//        inorder(root,res);
-//        return res;
-//    }
-//
-//    private void inorder(TreeNode root, ArrayList<Integer> res) {
-//        if(root==null){
-//            return;
-//        }
-//        inorder(root.left,res);
-//        res.add(root.val);
-//        inorder(root.right,res);
-//    }
+    // public List<Integer> inorderTraversal(TreeNode root) {
+    // ArrayList<Integer> res = new ArrayList<>();
+    // inorder(root,res);
+    // return res;
+    // }
+    //
+    // private void inorder(TreeNode root, ArrayList<Integer> res) {
+    // if(root==null){
+    // return;
+    // }
+    // inorder(root.left,res);
+    // res.add(root.val);
+    // inorder(root.right,res);
+    // }
 }
