@@ -3,65 +3,66 @@ package LC0127;
 import java.util.*;
 
 /**
- * TODO
  * @author zhanglei211 on 2021/10/26.
  */
 class Solution {
-    Map<String, Integer> wordId = new HashMap<String, Integer>();
-    List<List<Integer>> edge = new ArrayList<List<Integer>>();
-    int nodeNum = 0;
-
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        for (String word : wordList) {
-            addEdge(word);
-        }
-        addEdge(beginWord);
-        if (!wordId.containsKey(endWord)) {
+        int length = wordList.size();
+        int minLen = Integer.MAX_VALUE;
+        int endWordIndex = wordList.indexOf(endWord);
+        if (endWordIndex == -1) {
             return 0;
         }
-        int[] dis = new int[nodeNum];
-        Arrays.fill(dis, Integer.MAX_VALUE);
-        int beginId = wordId.get(beginWord), endId = wordId.get(endWord);
-        dis[beginId] = 0;
-
-        Queue<Integer> que = new LinkedList<Integer>();
-        que.offer(beginId);
-        while (!que.isEmpty()) {
-            int x = que.poll();
-            if (x == endId) {
-                return dis[endId] / 2 + 1;
-            }
-            for (int it : edge.get(x)) {
-                if (dis[it] == Integer.MAX_VALUE) {
-                    dis[it] = dis[x] + 1;
-                    que.offer(it);
+        ArrayList<Integer>[] edge = new ArrayList[length];
+        for (int i = 0; i < edge.length; i++) {
+            edge[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < wordList.size(); i++) {
+            for (int j = i + 1; j < wordList.size(); j++) {
+                if (check(wordList.get(i), wordList.get(j))) {
+                    edge[i].add(j);
+                    edge[j].add(i);
                 }
             }
         }
-        return 0;
+        for (int i = 0; i < wordList.size(); i++) {
+            ArrayDeque<Integer> queue = new ArrayDeque<>();
+            HashSet<Integer> set = new HashSet();
+            if (check(beginWord, wordList.get(i))) {
+                set.add(i);
+                int len = 1;
+                queue.add(i);
+                while (!queue.isEmpty()) {
+                    int size = queue.size();
+                    len++;
+                    for (int j = 0; j < size; j++) {
+                        Integer poll = queue.poll();
+                        if (poll == endWordIndex) {
+                            minLen = Math.min(minLen, len);
+                        }
+                        for (Integer integer : edge[poll]) {
+                            if (set.add(integer)) {
+                                queue.add(integer);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
     }
 
-    public void addEdge(String word) {
-        addWord(word);
-        int id1 = wordId.get(word);
-        char[] array = word.toCharArray();
-        int length = array.length;
-        for (int i = 0; i < length; ++i) {
-            char tmp = array[i];
-            array[i] = '*';
-            String newWord = new String(array);
-            addWord(newWord);
-            int id2 = wordId.get(newWord);
-            edge.get(id1).add(id2);
-            edge.get(id2).add(id1);
-            array[i] = tmp;
+    private boolean check(String s, String t) {
+        int diff = 0;
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            if (s.charAt(i) != t.charAt(i)) {
+                if (++diff >= 2) {
+                    return false;
+                }
+            }
         }
-    }
-
-    public void addWord(String word) {
-        if (!wordId.containsKey(word)) {
-            wordId.put(word, nodeNum++);
-            edge.add(new ArrayList<Integer>());
-        }
+        return true;
     }
 }
