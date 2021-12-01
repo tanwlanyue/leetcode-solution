@@ -1,11 +1,9 @@
-package test.util;
-
 /**
- * @author zhanglei211 on 2021/9/10.
+ * @author zhanglei211 on 2021/12/1.
  */
 public class ListNode {
     int val;
-    ListNode next;
+    LC0086.ListNode next;
 
     ListNode() {
     }
@@ -14,7 +12,7 @@ public class ListNode {
         this.val = val;
     }
 
-    ListNode(int val, ListNode next) {
+    ListNode(int val, LC0086.ListNode next) {
         this.val = val;
         this.next = next;
     }
