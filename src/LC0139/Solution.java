@@ -1,5 +1,6 @@
 package LC0139;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -8,21 +9,22 @@ import java.util.List;
  * @author zhanglei211 on 2021/11/17.
  */
 class Solution {
-    boolean flag = false;
-    boolean[] dp;
-
     public boolean wordBreak(String s, List<String> wordDict) {
+        HashSet<String> set = new HashSet<>(wordDict);
         int length = s.length();
-        this.dp = new boolean[length];
+        boolean[] dp = new boolean[length];
         for (int i = 0; i < length; i++) {
-            String substring = s.substring(i);
-            for (String word : wordDict) {
-                if (substring.startsWith(word)) {
-
+            if (set.contains(s.substring(0, i + 1))) {
+                dp[i] = true;
+                continue;
+            }
+            for (int j = i - 1; j >= 0; j--) {
+                if (set.contains(s.substring(j + 1, i + 1)) && dp[j]) {
+                    dp[i] = true;
+                    break;
                 }
             }
         }
-
-        return flag;
+        return dp[length - 1];
     }
 }
