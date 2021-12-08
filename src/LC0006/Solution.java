@@ -1,35 +1,32 @@
 package LC0006;
 
-import java.util.ArrayList;
-
 /**
+ * 6. Z 字形变换 </br>
+ * 执行用时： 4 ms , 在所有 Java 提交中击败了 81.10% 的用户 </br>
+ * 内存消耗： 39.1 MB , 在所有 Java 提交中击败了 24.52% 的用户
+ * 
  * @author zhanglei211 on 2021/11/16.
  */
 class Solution {
     public String convert(String s, int numRows) {
-        if(numRows==1){
+        if (numRows == 1) {
             return s;
         }
-        char[] arr = s.toCharArray();
-        ArrayList<StringBuilder> list = new ArrayList<>();
-        for (int i = 0; i < numRows; i++) {
-            list.add(new StringBuilder());
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < rows.length; i++) {
+            rows[i] = new StringBuilder();
         }
-        return convert(arr, list, numRows);
-    }
-
-    private String convert(char[] arr, ArrayList<StringBuilder> list, int numRows) {
-        int mod = numRows * 2 - 2;
-        for (int i = 0; i < arr.length; i++) {
+        int mod = 2 * (numRows - 1);
+        for (int i = 0; i < s.length(); i++) {
             int index = i % mod;
-            if (index > numRows - 1) {
-                index =mod - index;
+            if (index >= numRows) {
+                index = mod - index;
             }
-            list.get(index).append(arr[i]);
+            rows[index].append(s.charAt(i));
         }
         StringBuilder builder = new StringBuilder();
-        for (StringBuilder stringBuilder : list) {
-            builder.append(stringBuilder.toString());
+        for (StringBuilder row : rows) {
+            builder.append(row);
         }
         return builder.toString();
     }
