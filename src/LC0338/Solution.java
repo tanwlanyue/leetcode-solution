@@ -1,17 +1,19 @@
 package LC0338;
 
 /**
- * TODO
+ * 
  * @author zhanglei211 on 2021/11/23.
  */
 class Solution {
     public int[] countBits(int n) {
-        int[] arr = new int[n + 1];
-        int b=1;
-        for (int i = 0; i < 14; i++) {
-
+        int[] dp = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            if ((i & 1) == 0) {
+                dp[i] = dp[i / 2];
+            } else {
+                dp[i] = dp[i / 2] + 1;
+            }
         }
-
-        return arr;
+        return dp;
     }
 }
