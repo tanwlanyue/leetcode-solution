@@ -3,7 +3,7 @@
  */
 public class ListNode {
     int val;
-    LC0086.ListNode next;
+    ListNode next;
 
     ListNode() {
     }
@@ -12,8 +12,20 @@ public class ListNode {
         this.val = val;
     }
 
-    ListNode(int val, LC0086.ListNode next) {
+    ListNode(int val, ListNode next) {
         this.val = val;
         this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        ListNode head = this;
+        StringBuilder s = new StringBuilder();
+        while (head != null) {
+            s.append(head.val).append(" -> ");
+            head = head.next;
+        }
+        s.append("NULL");
+        return s.toString();
     }
 }
