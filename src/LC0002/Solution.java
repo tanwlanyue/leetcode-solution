@@ -1,28 +1,37 @@
 package LC0002;
 
 /**
+ * 2. 两数相加 <br/>
+ * 执行用时： 1 ms , 在所有 Java 提交中击败了 100.00% 的用户 </br>
+ * 内存消耗： 38.6 MB , 在所有 Java 提交中击败了 56.31% 的用户
+ * 
  * @author zhanglei211 on 2021/10/21.
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummyHead = new ListNode(-1);
-        ListNode dummy = dummyHead;
-        int plus = 0;
-        while (l1 != null || l2 != null) {
-            int val1 = l1 == null ? 0 : l1.val;
-            int val2 = l2 == null ? 0 : l2.val;
-            int sum = val1 + val2 + plus;
-            plus = sum >= 10 ? 1 : 0;
-            dummy.next = new ListNode(sum % 10);
-            dummy = dummy.next;
+        int carry = 0;
+        ListNode dummy = new ListNode(-1);
+        ListNode dummyHead = dummy;
+        while (l1 != null || l2 != null || carry != 0) {
+            int l1Val = 0, l2Val = 0;
             if (l1 != null) {
+                l1Val = l1.val;
                 l1 = l1.next;
             }
             if (l2 != null) {
+                l2Val = l2.val;
                 l2 = l2.next;
             }
+            int sum = l1Val + l2Val + carry;
+            if (sum >= 10) {
+                carry = 1;
+                sum = sum - 10;
+            } else {
+                carry = 0;
+            }
+            dummy.next = new ListNode(sum);
+            dummy = dummy.next;
         }
-        dummy.next = plus == 1 ? new ListNode(1) : null;
         return dummyHead.next;
     }
 }
