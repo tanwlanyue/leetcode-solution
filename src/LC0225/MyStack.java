@@ -3,6 +3,10 @@ package LC0225;
 import java.util.LinkedList;
 
 /**
+ * 225. 用队列实现栈 </br>
+ * 执行用时： 0 ms , 在所有 Java 提交中击败了 100.00% 的用户 </br>
+ * 内存消耗： 35.7 MB , 在所有 Java 提交中击败了 98.80% 的用户
+ * 
  * @author zhanglei211 on 2021/11/10.
  */
 class MyStack {
@@ -15,21 +19,28 @@ class MyStack {
     }
 
     public void push(int x) {
-        queue2.offer(x);
-        while (!queue1.isEmpty()) {
-            queue2.offer(queue1.poll());
-        }
-        LinkedList<Integer> temp = queue1;
-        queue1 = queue2;
-        queue2 = temp;
+        queue1.offer(x);
     }
 
     public int pop() {
-        return queue1.poll();
+        while (queue1.size() > 1) {
+            queue2.offer(queue1.poll());
+        }
+        int ret = queue1.poll();
+        queue1 = queue2;
+        queue2 = new LinkedList<>();
+        return ret;
     }
 
     public int top() {
-        return queue1.peek();
+        while (queue1.size() > 1) {
+            queue2.offer(queue1.poll());
+        }
+        int ret = queue1.poll();
+        queue2.offer(ret);
+        queue1 = queue2;
+        queue2 = new LinkedList<>();
+        return ret;
     }
 
     public boolean empty() {

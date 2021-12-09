@@ -1,44 +1,46 @@
 package LC0155;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 /**
- * minStack存的下标
+ * 155. 最小栈 </br>
+ * 执行用时： 4 ms , 在所有 Java 提交中击败了 99.60% 的用户 </br>
+ * 内存消耗： 39.6 MB , 在所有 Java 提交中击败了 97.96% 的用户
+ * 
  * @author zhanglei211 on 2021/10/19.
  */
 class MinStack {
-
-    ArrayList<Integer> numStack;
-    ArrayList<Integer> minStack;
+    Stack<Integer> stack;
+    Stack<Integer> minStack;
 
     public MinStack() {
-        this.numStack = new ArrayList<>();
-        this.minStack = new ArrayList<>();
+        this.stack = new Stack<>();
+        this.minStack = new Stack<>();
     }
 
     public void push(int val) {
-        numStack.add(val);
+        stack.push(val);
         if (minStack.isEmpty()) {
-            minStack.add(0);
+            minStack.push(stack.size() - 1);
         } else {
-            if (numStack.get(minStack.get(minStack.size() - 1)) > val) {
-                minStack.add(numStack.size() - 1);
+            if (val < stack.get(minStack.peek())) {
+                minStack.push(stack.size() - 1);
             }
         }
     }
 
     public void pop() {
-        numStack.remove(numStack.size() - 1);
-        if (numStack.size() == minStack.get(minStack.size() - 1)) {
-            minStack.remove(minStack.size() - 1);
+        stack.pop();
+        if (stack.size() == minStack.peek()) {
+            minStack.pop();
         }
     }
 
     public int top() {
-        return numStack.get(numStack.size() - 1);
+        return stack.peek();
     }
 
     public int getMin() {
-        return numStack.get(minStack.get(minStack.size() - 1));
+        return stack.get(minStack.peek());
     }
 }
