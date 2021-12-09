@@ -16,8 +16,8 @@ class Solution {
         ArrayDeque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < temperatures.length; i++) {
             while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
-                Integer poll = stack.poll();
-                arr[poll] = i - poll;
+                Integer pop = stack.pop();
+                arr[pop] = i - pop;
             }
             stack.push(i);
         }

@@ -6,46 +6,42 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * TODO
+ * 210. 课程表 II </br>
+ * 执行用时： 4 ms , 在所有 Java 提交中击败了 77.93% 的用户 </br>
+ * 内存消耗： 39 MB , 在所有 Java 提交中击败了 97.77% 的用户
  * 
  * @author zhanglei211 on 2021/11/29.
  */
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] inDegree = new int[numCourses];
-        HashMap<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        ArrayList<Integer>[] child = new ArrayList[numCourses];
+        for (int i = 0; i < child.length; i++) {
+            child[i] = new ArrayList<>();
+        }
         for (int[] prerequisite : prerequisites) {
             int cur = prerequisite[0];
             int pre = prerequisite[1];
-            if (!map.containsKey(pre)) {
-                map.put(pre, new ArrayList<>());
-            }
-            map.get(pre).add(cur);
+            child[pre].add(cur);
             inDegree[cur]++;
         }
-
         ArrayDeque<Integer> queue = new ArrayDeque<>();
         for (int i = 0; i < inDegree.length; i++) {
             if (inDegree[i] == 0) {
                 queue.add(i);
             }
         }
-        int[] ret = new int[numCourses];
-        int r = 0;
+        int[] arr = new int[numCourses];
+        int w = 0;
         while (!queue.isEmpty()) {
             Integer poll = queue.poll();
-            ret[r++] = poll;
-            if (map.get(poll) != null) {
-                for (Integer child : map.get(poll)) {
-                    if (--inDegree[child] == 0) {
-                        queue.add(child);
-                    }
+            arr[w++] = poll;
+            for (Integer i : child[poll]) {
+                if (--inDegree[i] == 0) {
+                    queue.add(i);
                 }
             }
         }
-        if (r == numCourses) {
-            return ret;
-        }
-        return new int[] {};
+        return w == numCourses ? arr : new int[] {};
     }
 }
