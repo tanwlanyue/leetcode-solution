@@ -1,25 +1,25 @@
 package LC0287;
 
 /**
+ * 287. 寻找重复数 </br>
+ * 执行用时： 4 ms , 在所有 Java 提交中击败了 94.56% 的用户 </br>
+ * 内存消耗： 53.7 MB , 在所有 Java 提交中击败了 87.47% 的用户
+ * 
  * @author zhanglei211 on 2021/11/12.
  */
 class Solution {
     public int findDuplicate(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
-            while (nums[i]!=i){
-                int num=nums[i];
-                if(nums[num]==num){
-                    return num;
-                }
-                swap(nums,i,num);
-            }
+        int slow = nums[0];
+        int fast = nums[nums[0]];
+        while (fast != slow) {
+            fast = nums[nums[fast]];
+            slow = nums[slow];
         }
-        return -1;
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int temp=nums[i];
-        nums[i]=nums[j];
-        nums[j]=temp;
+        fast = 0;
+        while (fast != slow) {
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        return fast;
     }
 }
